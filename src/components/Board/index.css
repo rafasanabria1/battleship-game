@@ -1,3 +1,41 @@
+.board-letter-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 80px;
+    width: 640px;
+    padding-left: 80px;
+}
+
+.board-number-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80px;
+    height: 640px;
+    float: left;
+}
+
+.board-field {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid 1px #ccc;
+    float: left;
+} 
+
+.board {
+    float: left;
+    width: 640px;
+    height: 640px;
+}
+
+/*
 .board-wrapper {
     display: flex;
     align-items: center;
@@ -28,3 +66,4 @@
     width: 80px;
     
 }
+*/
