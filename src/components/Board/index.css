@@ -1,0 +1,30 @@
+.board-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.board {
+    width: 800px;
+    height: 800px;
+    padding: 80px;
+}
+
+.board-field {
+    height: 80px;
+    width: 80px;
+    border: solid 1px #ccc;
+    float: left;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    float: left;
+}
+
+.board-field-letter {
+    height: 80px;
+    width: 80px;
+    
+}

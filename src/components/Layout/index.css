@@ -1,0 +1,23 @@
+.wrapper-layout {
+    height: 100dvh;
+    width: 100dvw;
+    min-width: 801px;
+}
+
+@media (min-width: 800px) {
+
+    .wrapper-layout {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .layout {
+        border: solid 1px #ccc;
+        box-shadow: 10px 10px 50px 0px rgba(0,0,0,0.75);
+        width: 800px;
+        height: 90dvh;
+        border-radius: 10px;
+    }
+}
+
