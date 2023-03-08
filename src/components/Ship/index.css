@@ -1,12 +1,17 @@
 .ship {
-    position: absolute;
-    z-index: 1;
+
     background: green;
     border-radius: 10px;
+    display: block;
+}
+.board-game .ship {
+
+    position: absolute;
+    z-index: 1;
     top: 5px;
     left: 5px;
+    pointer-events: none;
 }
-
 .ship.row {
 
     height: calc(var(--box-size) - 10px);
@@ -32,7 +37,6 @@
     width: calc(5 * var(--box-size) - 10px);
 }
 
-
 .ship.column {
 
     width: calc(var(--box-size) - 10px);
@@ -56,4 +60,16 @@
 .ship.column.size-5 {
 
     height: calc(5 * var(--box-size) - 10px);
+}
+
+
+.ships-no-fixed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ships-no-fixed .ship {
+    margin: .5em;
+    cursor: pointer;
 }
