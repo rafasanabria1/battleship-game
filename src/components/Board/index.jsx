@@ -1,62 +1,12 @@
-import { useState } from 'react'
+import './index.css'
 import { Ship } from '../Ship'
 import { v1 as uuid } from 'uuid'
-import './index.css'
 import { orientations, letters, numbers } from '../../utils'
+import { useContext } from 'react'
+import BattleShipContext from '../../contexts/BattleShipContext'
 
 export const Board = () => {
-  const [shipsFixed, setShipsFixed] = useState(false)
-  const [hits, setHits] = useState([])
-  const [ships, setShips] = useState([
-    {
-      size: 5,
-      orientation: orientations.ROW,
-      position: null,
-      hitted: [],
-      selected: false,
-      id: uuid()
-    },
-    {
-      size: 5,
-      orientation: orientations.ROW,
-      position: null,
-      hitted: [],
-      selected: false,
-      id: uuid()
-    },
-    {
-      size: 4,
-      orientation: orientations.ROW,
-      position: null,
-      hitted: [],
-      selected: false,
-      id: uuid()
-    },
-    {
-      size: 4,
-      orientation: orientations.ROW,
-      position: null,
-      hitted: [],
-      selected: false,
-      id: uuid()
-    },
-    {
-      size: 3,
-      orientation: orientations.ROW,
-      position: null,
-      hitted: [],
-      selected: false,
-      id: uuid()
-    },
-    {
-      size: 2,
-      orientation: orientations.ROW,
-      position: null,
-      hitted: [],
-      selected: false,
-      id: uuid()
-    }
-  ])
+  const { ships, hits, setHits, shipsFixed } = useContext(BattleShipContext)
 
   const checkHit = (letter, number) => {
     return ships.filter(ship => {
