@@ -1,7 +1,7 @@
 .wrapper-layout {
     height: 100dvh;
     width: 100dvw;
-    min-width: 801px;
+    /*min-width: 801px;*/
 }
 
 @media (min-width: 800px) {

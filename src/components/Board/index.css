@@ -1,8 +1,3 @@
-:root {
-
-    --box-size: 40px;
-}
-
 .board-container {
     display: grid;
     place-items: center;
@@ -11,17 +6,16 @@
 
 .board-game {
 
-    width: calc(var(--box-size) * 9);
-    height: calc(var(--box-size) * 9);
+    width: calc(var(--box-size) * 8);
+    height: calc(var(--box-size) * 8);
     border-spacing: 0px;
-    box-sizing: border-box;
     border-collapse: collapse;
 }
 
 .board-game td {
     width: var(--box-size);
     height: var(--box-size);
-    border: solid 1px #ccc;
+    outline: solid 1px #ccc;
 }
 
 .box {
@@ -32,6 +26,7 @@
 .box .info {
     position: absolute;
     font-size: 0.5rem;
+    line-height: 0.5rem;
     opacity: .5;
 }
 
@@ -44,3 +39,4 @@
     bottom: 2px;
     left: 2px;
 }
+
