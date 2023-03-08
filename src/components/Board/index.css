@@ -21,6 +21,7 @@
 .box {
     position: relative;
     padding: 0px;
+    cursor: pointer;
 }
 
 .box .info {
@@ -40,3 +41,18 @@
     left: 2px;
 }
 
+.marker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    position: relative;
+}
+
+.marker.hit {
+    color: red;
+}
+
+.marker.missed {
+    color: blue;
+}
