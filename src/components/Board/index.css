@@ -56,3 +56,23 @@
 .marker.missed {
     color: blue;
 }
+
+.button-container {
+    padding: 2em;
+}
+.button-container button {
+    
+    border-radius: 10px;
+    border: solid 1px blue;
+    background-color: #add8e6;
+    padding: 5px 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: blue;
+    cursor: pointer;
+}
+
+.button-container button:hover {
+
+    background-color: #add8e6cc;
+}

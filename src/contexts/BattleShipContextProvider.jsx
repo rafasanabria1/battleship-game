@@ -56,9 +56,10 @@ const BattleShipContextProvider = (props) => {
       id: uuid()
     }
   ])
+  const [selectedShip, setSelectedShip] = useState(null)
 
   return (
-    <BattleShipContext.Provider value={{ ships, setShips, hits, setHits, shipsFixed, setShipsFixed }}>{props.children}</BattleShipContext.Provider>
+    <BattleShipContext.Provider value={{ ships, setShips, hits, setHits, shipsFixed, setShipsFixed, selectedShip, setSelectedShip }}>{props.children}</BattleShipContext.Provider>
   )
 }
 

@@ -6,7 +6,7 @@ import { useContext } from 'react'
 import BattleShipContext from '../../contexts/BattleShipContext'
 
 export const Board = () => {
-  const { ships, hits, setHits, shipsFixed } = useContext(BattleShipContext)
+  const { ships, setShips, hits, setHits, shipsFixed, setShipsFixed, selectedShip, setSelectedShip } = useContext(BattleShipContext)
 
   const checkHit = (letter, number) => {
     return ships.filter(ship => {
@@ -24,11 +24,30 @@ export const Board = () => {
         const hitLetterPosition = letters.indexOf(letter)
 
         return ship.position.number === number && hitLetterPosition >= shipLetterPositionStart && hitLetterPosition <= shipLetterPositionEnd
-      } else return false
+      }
+      return false
     }).length > 0
   }
 
+  const checkValidPosition = (position) => {
+    if (!selectedShip) return false
+    if (selectedShip.size === 1) return true
+    else if (selectedShip.orientation === orientations.COLUMN) {
+      const shipNumberPositionStart = numbers.indexOf(position.number)
+      const shipNumberPositionEnd = shipNumberPositionStart + selectedShip.size
+
+      return shipNumberPositionEnd <= numbers.length
+    } else if (selectedShip.orientation === orientations.ROW) {
+      const shipLetterPositionStart = letters.indexOf(position.letter)
+      const shipLetterPositionEnd = shipLetterPositionStart + selectedShip.size
+
+      return shipLetterPositionEnd <= letters.length
+    }
+    return false
+  }
+
   const handleBoxClick = (letter, number) => {
+    console.log({ letter, number })
     if (!shipsFixed) return
     if (hits.filter(hit => hit.position.letter === letter && hit.position.number === number).length > 0) return
 
@@ -40,6 +59,27 @@ export const Board = () => {
       hit: checkHit(letter, number),
       id: uuid()
     }])
+  }
+
+  const handleFixShips = () => {
+    if (ships.filter(ship => !ship.position).length > 0) return
+    setShipsFixed(true)
+  }
+
+  const handleDropOnBox = (e) => {
+    if (!e.target.classList.contains('box')) return
+    const droppedPosition = { letter: e.target.getAttribute('data-letter'), number: parseInt(e.target.getAttribute('data-number')) }
+    if (checkValidPosition(droppedPosition)) {
+      setShips(oldShips => {
+        const newShips = oldShips.map(sh => {
+          if (sh.id === selectedShip.id) return { ...sh, position: droppedPosition }
+          return { ...sh }
+        })
+
+        return newShips
+      })
+      setSelectedShip(null)
+    }
   }
 
   return (
@@ -54,7 +94,7 @@ export const Board = () => {
                   {
                     letters.map((letter, j) => {
                       return (
-                        <td className='box' key={'box-' + j} data-letter={letter} data-number={number} onClick={() => handleBoxClick(letter, number)}>
+                        <td className='box' key={'box-' + j} data-letter={letter} data-number={number} onClick={() => handleBoxClick(letter, number)} onDrop={handleDropOnBox} onDragOver={(e) => { e.stopPropagation(); e.preventDefault() }}>
                           {number === 1 && (<span className='info letter'>{letter}</span>)}
                           {letter === 'A' && (<span className='info number'>{number}</span>)}
                           {
@@ -83,16 +123,23 @@ export const Board = () => {
       </table>
 
       {
-        !shipsFixed && (
-          <div className='ships-no-fixed'>
-            {
-              ships.filter(ship => ship.position === null).map(ship => {
-                return (<Ship ship={ship} key={ship.id} />)
-              })
-            }
-          </div>
-        )
-      }
+            ships.filter(ship => ship.position === null).length > 0 && (
+              <div className='ships-no-fixed'>
+                {
+                    ships.filter(ship => ship.position === null).map(ship => {
+                      return (<Ship ship={ship} key={ship.id} />)
+                    })
+                }
+              </div>
+            )
+        }
+      {
+            !shipsFixed && (
+              <div className='button-container'>
+                <button className='' onClick={handleFixShips}>Fijar barcos</button>
+              </div>
+            )
+        }
     </div>
   )
 }

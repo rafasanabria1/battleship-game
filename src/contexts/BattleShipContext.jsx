@@ -5,8 +5,11 @@ const BattleShipContext = React.createContext({
   setShips: null,
   hits: [],
   setHits: null,
-  shipsFixed: [],
-  setShipsFixed: null
+  shipsFixed: false,
+  setShipsFixed: null,
+  selectedShip: null,
+  setSelectedShip: null
+
 })
 
 export default BattleShipContext

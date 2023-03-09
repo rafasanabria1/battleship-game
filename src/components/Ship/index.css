@@ -1,6 +1,7 @@
 .ship {
 
-    background: green;
+    background: lightgreen;
+    border: solid 1px green;
     border-radius: 10px;
     display: block;
 }
@@ -64,12 +65,19 @@
 
 
 .ships-no-fixed {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    border: solid 1px #ccc;
+    border-radius: 5px;
+    margin-top: 1em;
+    width: 320px;
+    background-color: #cccccc22;
 }
 
 .ships-no-fixed .ship {
     margin: .5em;
     cursor: pointer;
+    float: left;
+}
+
+.ships-no-fixed .ship:hover {
+    opacity: 0.7;
 }
