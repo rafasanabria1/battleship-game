@@ -1,0 +1,122 @@
+.toast-container {
+    font-size: 14px;
+    box-sizing: border-box;
+    position: absolute;
+}
+.toast-container.top-right {
+    top: calc(var(--header-height) + 12px);
+    right: 12px;
+}
+.toast-container.top-right .notification {
+    transition: transform .6s ease-in-out;
+    animation: toast-in-right .7s;
+}
+.toast-container.bottom-right {
+    bottom: 12px;
+    right: 12px;
+}
+.toast-container.bottom-right .notification {
+    transition: transform .6s ease-in-out;
+    animation: toast-in-right .7s;
+}
+.toast-container.top-left {
+    top: calc(var(--header-height) + 12px);
+    left: 12px;
+}
+.toast-container.top-left .notification {
+    transition: transform .6s ease-in;
+    animation: toast-in-left .7s;
+}
+.toast-container.bottom-left {
+    bottom: 12px;
+    left: 12px;
+}
+.toast-container.bottom-left .notification {
+    transition: transform .6s ease-in;
+    animation: toast-in-left .7s;
+}
+
+.notification {
+    width: 300px;
+    position: relative;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    z-index: 2;
+    padding: .5em;
+    display: flex;
+    align-items: center;
+    color: white;
+    box-shadow: 0 0 10px #999;
+    opacity: .8;
+}
+.notification:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+.notification.success {
+    background-color: #5cb85c;
+}
+
+.notification.danger {
+    background-color: #d9534f;
+}
+
+.notification.info {
+    background-color: #5bc0de;
+}
+
+.notification.warning {
+    background-color: #f0ad4e;
+}
+
+.notification button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    background: none;
+    color: white;
+    font-weight: bold;
+}
+
+.toast-icon-container {
+    margin-right: 1em;
+    font-size: 16px;
+}
+
+.toast-text-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.toast-text-container .title {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.toast-text-container .message {
+    font-size: 12px;
+}
+
+@keyframes toast-in-right {
+	from {
+	  transform: translateX(100%);
+	  
+	}
+	to {
+	  transform: translateX(0);
+	}
+}
+
+@keyframes toast-in-left {
+	from {
+		transform: translateX(-100%);
+		
+	}
+	to {
+		transform: translateX(0);
+	}
+}

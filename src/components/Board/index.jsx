@@ -4,9 +4,11 @@ import { v1 as uuid } from 'uuid'
 import { orientations, letters, numbers, comparePosition } from '../../utils'
 import { useContext } from 'react'
 import BattleShipContext from '../../contexts/BattleShipContext'
+import ToastContext from '../../contexts/ToastContext'
 
 export const Board = () => {
   const { ships, setShips, hits, setHits, shipsFixed, setShipsFixed, selectedShip, setSelectedShip, resetGame } = useContext(BattleShipContext)
+  const { addNotification } = useContext(ToastContext)
 
   const getShipInPosition = (position) => {
     return ships.find(ship => {
@@ -73,7 +75,7 @@ export const Board = () => {
   }
 
   const handleFixShips = () => {
-    if (ships.filter(ship => !ship.position).length > 0) return
+    if (ships.filter(ship => !ship.position).length > 0) return addNotification({ type: 'info', title: 'Operación no permitida', message: 'Debe colocar todos los barcos antes de comenzar la partida.' })
     setShipsFixed(true)
   }
 
@@ -155,7 +157,7 @@ export const Board = () => {
                 }
                 </div>
                 <div className='button-container'>
-                  <button className='' onClick={handleFixShips}>Fijar barcos</button>
+                  <button className='' onClick={handleFixShips}>Comenzar la partida</button>
                 </div>
               </>
             )

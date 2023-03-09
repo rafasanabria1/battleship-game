@@ -1,7 +1,10 @@
 .wrapper-layout {
     height: 100dvh;
     width: 100dvw;
-    /*min-width: 801px;*/
+}
+
+.layout {
+    position: relative;
 }
 
 @media (min-width: 800px) {
