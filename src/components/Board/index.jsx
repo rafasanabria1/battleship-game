@@ -47,7 +47,6 @@ export const Board = () => {
   }
 
   const handleBoxClick = (letter, number) => {
-    console.log({ letter, number })
     if (!shipsFixed) return
     if (hits.filter(hit => hit.position.letter === letter && hit.position.number === number).length > 0) return
 

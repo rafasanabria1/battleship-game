@@ -1,0 +1,17 @@
+header {
+    border-bottom: 1px solid #ccc;
+}
+header .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    margin: 0 auto;
+    padding: 1em 0;
+}
+
+
+header .container .title {
+    margin-left: .5em;
+    font-size: 30px;
+}
