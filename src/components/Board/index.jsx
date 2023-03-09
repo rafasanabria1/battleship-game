@@ -17,13 +17,13 @@ export const Board = () => {
         const shipNumberPositionEnd = shipNumberPositionStart + ship.size
         const hitNumberPosition = numbers.indexOf(number)
 
-        return ship.position.letter === letter && hitNumberPosition >= shipNumberPositionStart && hitNumberPosition <= shipNumberPositionEnd
+        return ship.position.letter === letter && hitNumberPosition >= shipNumberPositionStart && hitNumberPosition < shipNumberPositionEnd
       } else if (ship.orientation === orientations.ROW) {
         const shipLetterPositionStart = letters.indexOf(ship.position.letter)
         const shipLetterPositionEnd = shipLetterPositionStart + ship.size
         const hitLetterPosition = letters.indexOf(letter)
 
-        return ship.position.number === number && hitLetterPosition >= shipLetterPositionStart && hitLetterPosition <= shipLetterPositionEnd
+        return ship.position.number === number && hitLetterPosition >= shipLetterPositionStart && hitLetterPosition < shipLetterPositionEnd
       }
       return false
     }).length > 0
@@ -81,6 +81,17 @@ export const Board = () => {
     }
   }
 
+  const handleDropOnReset = () => {
+    setShips(oldShips => {
+      const newShips = oldShips.map(sh => {
+        if (sh.id === selectedShip.id) return { ...sh, position: null }
+        return { ...sh }
+      })
+
+      return newShips
+    })
+  }
+
   return (
 
     <div className='board-container'>
@@ -122,21 +133,35 @@ export const Board = () => {
       </table>
 
       {
-            ships.filter(ship => ship.position === null).length > 0 && (
-              <div className='ships-no-fixed'>
-                {
+            !shipsFixed && (
+              <>
+                <div className='ships-no-fixed' onDrop={handleDropOnReset} onDragOver={(e) => { e.stopPropagation(); e.preventDefault() }}>
+                  {
                     ships.filter(ship => ship.position === null).map(ship => {
                       return (<Ship ship={ship} key={ship.id} />)
                     })
                 }
-              </div>
+                </div>
+                <div className='button-container'>
+                  <button className='' onClick={handleFixShips}>Fijar barcos</button>
+                </div>
+              </>
             )
         }
       {
-            !shipsFixed && (
-              <div className='button-container'>
-                <button className='' onClick={handleFixShips}>Fijar barcos</button>
-              </div>
+            shipsFixed && (
+              <>
+                <span className='hits-info' style={{ color: 'red' }}>
+                  {
+                            hits.filter(hit => hit.hit).length + ' toques en barcos'
+                    }
+                </span>
+                <span className='missed-info' style={{ color: 'blue' }}>
+                  {
+                            hits.filter(hit => !hit.hit).length + ' toques en agua'
+                    }
+                </span>
+              </>
             )
         }
     </div>
