@@ -18,6 +18,7 @@
         width: 800px;
         height: 90dvh;
         border-radius: 10px;
+        overflow: auto;
     }
 }
 

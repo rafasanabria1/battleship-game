@@ -5,17 +5,31 @@
     border-radius: 10px;
     display: block;
 }
+.ship.sunk {
+
+    background: lightcoral;
+    border: solid 1px red;
+    border-radius: 10px;
+    display: block;
+}
 .board-game .ship {
 
     position: absolute;
     z-index: 1;
     top: 5px;
     left: 5px;
-    /*pointer-events: none;*/
 }
-
 .board-game .ship.position-fixed {
     pointer-events: none;
+}
+.ships-no-fixed .ship {
+    margin: .5em;
+    cursor: pointer;
+    float: left;
+    clear: both;
+}
+.ships-no-fixed .ship:hover {
+    opacity: 0.7;
 }
 
 .ship.row {
@@ -68,22 +82,3 @@
     height: calc(5 * var(--box-size) - 10px);
 }
 
-
-.ships-no-fixed {
-    border: solid 1px #ccc;
-    border-radius: 5px;
-    margin-top: 1em;
-    width: 320px;
-    min-height: 320px;
-    background-color: #cccccc22;
-}
-
-.ships-no-fixed .ship {
-    margin: .5em;
-    cursor: pointer;
-    float: left;
-}
-
-.ships-no-fixed .ship:hover {
-    opacity: 0.7;
-}

@@ -6,8 +6,8 @@
 
 .board-game {
 
-    width: calc(var(--box-size) * 8);
-    height: calc(var(--box-size) * 8);
+    width: calc(var(--box-size) * var(--board-size));
+    height: calc(var(--box-size) * var(--board-size));
     border-spacing: 0px;
     border-collapse: collapse;
 }
@@ -76,4 +76,16 @@
 .button-container button:hover {
 
     background-color: #add8e6cc;
+}
+
+.ships-no-fixed {
+    border: solid 1px #ccc;
+    border-radius: 5px;
+    margin-top: 1em;
+    width: calc(var(--box-size) * var(--board-size));
+    background-color: #cccccc22;
+}
+
+.ships-no-fixed:empty {
+    min-height: calc(var(--box-size) * var(--board-size) / 2);
 }

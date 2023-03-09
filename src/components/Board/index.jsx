@@ -1,32 +1,32 @@
 import './index.css'
 import { Ship } from '../Ship'
 import { v1 as uuid } from 'uuid'
-import { orientations, letters, numbers } from '../../utils'
+import { orientations, letters, numbers, comparePosition } from '../../utils'
 import { useContext } from 'react'
 import BattleShipContext from '../../contexts/BattleShipContext'
 
 export const Board = () => {
-  const { ships, setShips, hits, setHits, shipsFixed, setShipsFixed, selectedShip, setSelectedShip } = useContext(BattleShipContext)
+  const { ships, setShips, hits, setHits, shipsFixed, setShipsFixed, selectedShip, setSelectedShip, resetGame } = useContext(BattleShipContext)
 
-  const checkHit = (letter, number) => {
-    return ships.filter(ship => {
+  const getShipInPosition = (position) => {
+    return ships.find(ship => {
       if (!ship.position) return false
-      if (ship.size === 1) return ship.position.letter === letter && ship.position.number === number
+      if (ship.size === 1) return comparePosition(ship.position, position)
       else if (ship.orientation === orientations.COLUMN) {
         const shipNumberPositionStart = numbers.indexOf(ship.position.number)
         const shipNumberPositionEnd = shipNumberPositionStart + ship.size
-        const hitNumberPosition = numbers.indexOf(number)
+        const hitNumberPosition = numbers.indexOf(position.number)
 
-        return ship.position.letter === letter && hitNumberPosition >= shipNumberPositionStart && hitNumberPosition < shipNumberPositionEnd
+        return ship.position.letter === position.letter && hitNumberPosition >= shipNumberPositionStart && hitNumberPosition < shipNumberPositionEnd
       } else if (ship.orientation === orientations.ROW) {
         const shipLetterPositionStart = letters.indexOf(ship.position.letter)
         const shipLetterPositionEnd = shipLetterPositionStart + ship.size
-        const hitLetterPosition = letters.indexOf(letter)
+        const hitLetterPosition = letters.indexOf(position.letter)
 
-        return ship.position.number === number && hitLetterPosition >= shipLetterPositionStart && hitLetterPosition < shipLetterPositionEnd
+        return ship.position.number === position.number && hitLetterPosition >= shipLetterPositionStart && hitLetterPosition < shipLetterPositionEnd
       }
       return false
-    }).length > 0
+    })
   }
 
   const checkValidPosition = (position) => {
@@ -46,16 +46,28 @@ export const Board = () => {
     return false
   }
 
-  const handleBoxClick = (letter, number) => {
+  const handleBoxClick = (position) => {
     if (!shipsFixed) return
-    if (hits.filter(hit => hit.position.letter === letter && hit.position.number === number).length > 0) return
+    if (hits.filter(hit => comparePosition(hit.position, position)).length > 0) return
+
+    const shipInPosition = getShipInPosition(position)
+    console.log(shipInPosition)
+
+    if (shipInPosition) {
+      setShips(oldShips => {
+        const newShips = [...oldShips]
+        const index = newShips.findIndex(ship => ship.id === shipInPosition.id)
+        const modifiedShip = { ...newShips[index] }
+        modifiedShip.hits++
+
+        newShips[index] = modifiedShip
+        return newShips
+      })
+    }
 
     setHits(oldHits => [...oldHits, {
-      position: {
-        letter,
-        number
-      },
-      hit: checkHit(letter, number),
+      position,
+      hit: shipInPosition !== undefined,
       id: uuid()
     }])
   }
@@ -104,7 +116,7 @@ export const Board = () => {
                   {
                     letters.map((letter, j) => {
                       return (
-                        <td className='box' key={'box-' + j} data-letter={letter} data-number={number} onClick={() => handleBoxClick(letter, number)} onDrop={handleDropOnBox} onDragOver={(e) => { e.stopPropagation(); e.preventDefault() }}>
+                        <td className='box' key={'box-' + j} data-letter={letter} data-number={number} onClick={() => handleBoxClick({ letter, number })} onDrop={handleDropOnBox} onDragOver={(e) => { e.stopPropagation(); e.preventDefault() }}>
                           {number === 1 && (<span className='info letter'>{letter}</span>)}
                           {letter === 'A' && (<span className='info number'>{number}</span>)}
                           {
@@ -153,15 +165,27 @@ export const Board = () => {
               <>
                 <span className='hits-info' style={{ color: 'red' }}>
                   {
-                            hits.filter(hit => hit.hit).length + ' toques en barcos'
+                        hits.filter(hit => hit.hit).length + ' toques en barcos'
                     }
                 </span>
                 <span className='missed-info' style={{ color: 'blue' }}>
                   {
-                            hits.filter(hit => !hit.hit).length + ' toques en agua'
+                        hits.filter(hit => !hit.hit).length + ' toques en agua'
+                    }
+                </span>
+                <span className='boats-info' style={{ color: 'yellowgreen' }}>
+                  {
+                        ships.filter(ship => ship.size > ship.hits).length + ' barcos restantes'
                     }
                 </span>
               </>
+            )
+        }
+      {
+            ships.filter(ship => ship.size > ship.hits).length <= 0 && (
+              <div className='button-container'>
+                <button className='' onClick={resetGame}>Reiniciar</button>
+              </div>
             )
         }
     </div>

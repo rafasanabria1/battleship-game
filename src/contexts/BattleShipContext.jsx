@@ -8,8 +8,8 @@ const BattleShipContext = React.createContext({
   shipsFixed: false,
   setShipsFixed: null,
   selectedShip: null,
-  setSelectedShip: null
-
+  setSelectedShip: null,
+  resetgame: null
 })
 
 export default BattleShipContext
