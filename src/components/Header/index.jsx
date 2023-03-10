@@ -1,7 +1,10 @@
 import './index.css'
 import { ShipSVG } from '../../assets/ShipSVG'
+import useUser from '../../hooks/useUser'
+import { logout } from '../../firebase/client'
 
 export const Header = () => {
+  const user = useUser()
   return (
     <header>
       <div className='container'>
@@ -12,6 +15,9 @@ export const Header = () => {
           Battle Ship - Game
         </div>
       </div>
+      {
+            user && <button onClick={logout}>Logout</button>
+        }
     </header>
   )
 }
